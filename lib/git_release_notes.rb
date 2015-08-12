@@ -2,19 +2,20 @@ require 'ostruct'
 require 'thor'
 require 'git_release_notes/version'
 
-module GitReleaseNotes
-  BLANK_LINE = "\n\n"
-  HR = "\n\n* * *\n\n"
+BLANK_LINE = "\n\n"
+HR = "\n\n* * *\n\n"
 
-  class Array
-    def blank_line
-      self.join(BLANK_LINE)
-    end
-
-    def hr
-      self.join(HR)
-    end
+class Array
+  def blank_line
+    self.join(BLANK_LINE)
   end
+
+  def hr
+    self.join(HR)
+  end
+end
+
+module GitReleaseNotes
 
   class ReleaseLog
     attr_accessor :release_notes
@@ -58,8 +59,8 @@ module GitReleaseNotes
   class ReleaseNotesParser < Thor
     def initialize(args = [], local_options = {}, config = {})
       super args, local_options, config
-      @repo_path = File.join(File.realdirpath(File.dirname(__FILE__)), "..") # TODO: Override from option? ...
-      @g = Git::open @repo_path
+      # ditch if we are not in a git repo!
+      abort "You suck" unless git_repo?
     end
 
     package_name "Release notes parser"
@@ -93,7 +94,15 @@ module GitReleaseNotes
 
     # execute git command on --git-dir
     def gitcmd(cmd)
-      %x(git --git-dir=#{@repo_path}/.git #{cmd})
+      %x(git #{cmd})
+    end
+
+    def git_repo?
+      ! git_root.include? "fatal: Not a git repository (or any of the parent directories): .git"
+    end
+
+    def git_root
+      %x(git rev-parse --show-toplevel)
     end
 
     def git_log(a, b = 'HEAD')
