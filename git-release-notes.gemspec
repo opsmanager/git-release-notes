@@ -1,7 +1,7 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'git/release/notes/version'
+require 'git_release_notes/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "git-release-notes"
@@ -21,8 +21,8 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.8"
   spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rspec"
-  spec.add_development_dependency "pry-byebug"
+  spec.add_development_dependency "rspec", "~> 0"
+  spec.add_development_dependency "pry-byebug", "~> 0"
 
   spec.add_runtime_dependency 'thor', '~> 0.19'
 end
