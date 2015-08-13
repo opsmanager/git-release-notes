@@ -66,13 +66,13 @@ to HEAD on current branch) and list the release-notes found (if any)
 
 ### Additional options
 
-    [--reverse=List release notes in reverse chronological order (newest -> oldest)], [--no-reverse]
+- `--reverse` List release notes in reverse chronological order (newest -> oldest)
 
-    [--show-time=List release notes with SHA1 & time of commit], [--no-show-time]
+- `--show-time` List release notes with SHA1 & time of commit
 
-    [--show-tags=List release notes showing their tags], [--no-show-tags]
+- `--show-tags` List release notes showing their tags
 
-    [--filter-tags=Specify a comma separated list of release note meta-tags to be included. See README for details]
+- `--filter-tags` Specify a comma separated list of release note meta-tags to be included. See README for details
 
 ## Development
 
