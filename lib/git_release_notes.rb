@@ -67,12 +67,16 @@ module GitReleaseNotes
 
     desc "list", "List all release notes from git log"
     method_option :sha, banner: "Specify the SHA of the starting commit (parses log from SHA to HEAD on current branch)", required: true
+    method_option :reverse, banner: "List release notes in reverse chronological order (newest -> oldest)", type: :boolean
     method_option :show_time, banner: "List release notes with SHA1 & time of commit", type: :boolean
     method_option :show_tags, banner: "List release notes showing their tags", type: :boolean
     method_option :filter_tags, banner: "Specify a comma separated list of release note meta-tags to be included. See README for details"
     def list
       puts "# Listing release notes (#{options.sha} => HEAD)#{HR}"
       @release_notes = git_log(options.sha).get(options)
+      if options.reverse?
+        @release_notes.reverse!
+      end
       output = @release_notes.map{ |r|
         out = []
         if options.show_time?
